@@ -22,16 +22,16 @@ def test_day2_loss_loop():
 def test_day2_win():
     lines = ['A Z']
     score = sut.sn2(lines)
-    assert score == 2
+    assert score == 8
 
 
 def test_day2_win_loop():
     lines = ['C Z']
     score = sut.sn2(lines)
-    assert score == 1
+    assert score == 7
 
 
 def test_day2_draw():
     lines = ['A Y']
     score = sut.sn2(lines)
-    assert score == 1
+    assert score == 4
