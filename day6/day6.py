@@ -10,7 +10,8 @@ def sn(line, n):
     for i, char in enumerate(line):
         if char in last_n_chars:
             # Not unique, go back to last occurrence of this letter
-            last_n_chars = last_n_chars[last_n_chars.index(char)+1:] + char
+            start = last_n_chars.index(char)+1
+            last_n_chars = last_n_chars[start:] + char
         elif len(last_n_chars) < n:
             last_n_chars += char
         if len(last_n_chars) == n:
@@ -19,3 +20,14 @@ def sn(line, n):
 
 print(sn(txt_to_lines()[0], 4))
 print(sn(txt_to_lines()[0], 14))
+
+
+# from collections import deque
+
+
+# def s1(datastream):
+#     window = deque(maxlen=4)
+#     for index, char in enumerate(datastream):
+#         window.append(char)
+#         if len(set(window)) == 4:
+#             return index + 1
