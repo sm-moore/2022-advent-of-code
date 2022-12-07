@@ -69,7 +69,7 @@ def parse(lines):
 def directory_sum(dirr):
     # Sum of all nested files in the given directory
     summ = 0
-    for k, v in dirr.items():
+    for v in dirr.values():
         if type(v) is int:
             summ += v
         else:
