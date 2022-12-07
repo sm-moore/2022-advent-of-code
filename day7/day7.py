@@ -4,7 +4,12 @@ def txt_to_lines():
     return lines
 
 
-def process_file_system(lines):
+def process_ls(lines):
+    """Given lines of input parse listed files/dirs until another command is
+        reached.
+        Returns a dictionary representing the file system as shown by ls.
+        Directories will have a dict as the value, files will have an int.
+    """
     fs = {}
     for line in lines:
         if line[0] == '$':
@@ -21,6 +26,9 @@ def process_file_system(lines):
 
 
 def put_fs_at_curr_path(file_sys, current_path, fs):
+    """Given a file system dictionary and a list of strings representing the
+    current path set fs at the current path in the file system.
+    """
     f = file_sys
     for idx, ppp in enumerate(current_path):
         if idx == len(current_path) - 1:
@@ -32,30 +40,34 @@ def put_fs_at_curr_path(file_sys, current_path, fs):
 
 
 def parse(lines):
+    # Parse the input into a dictionary where dictionary values represent
+    # dirs and int values represent files
     file_sys = {}
     current_path = []
-    for idx in range(len(lines)):
-        # for idx, line in enumerate(lines):
-        line = lines[idx]
+    for idx, line in enumerate(lines):
+        # process the commands
         if line[0] == '$':
-            # this is a command
             cmds = line.split(' ')
             if cmds[1] == 'ls':
-                # breakpoint()
-                # output is going to be a list of directories and files
-                fs = process_file_system(lines[idx+1:])
+                fs = process_ls(lines[idx+1:])
+                # I'm sure this could be done recursively by traversing all
+                # the way down the tree and building the file system on the
+                # way up.
                 put_fs_at_curr_path(file_sys, current_path, fs)
             elif cmds[1] == 'cd':
-                # Looks like there is no hopping directories, thankfully
-                dir = cmds[2]
-                if dir == '..':
+                # Looks like there is no skipping directories, thankfully
+                # Part of why I didn't do the above recursively was because I
+                # thought there would be skipping around ex. 'cd ../a'.
+                change_to = cmds[2]
+                if change_to == '..':
                     current_path.pop()
                 else:
-                    current_path.append(dir)
+                    current_path.append(change_to)
     return file_sys
 
 
 def directory_sum(dirr):
+    # Sum of all nested files in the given directory
     summ = 0
     for k, v in dirr.items():
         if type(v) is int:
@@ -67,7 +79,7 @@ def directory_sum(dirr):
 
 def sn(file_system, max_val=100_000):
     summ = 0
-    for k, v in file_system.items():
+    for v in file_system.values():
         if type(v) is dict:
             ds = directory_sum(v)
             if ds <= max_val:
@@ -79,7 +91,7 @@ def sn(file_system, max_val=100_000):
 def dirs_above_need(file_system, need) -> list:
     above_need = []
 
-    for k, v in file_system.items():
+    for v in file_system.values():
         if type(v) is dict:
             if directory_sum(v) >= need:
                 above_need.append(directory_sum(v))

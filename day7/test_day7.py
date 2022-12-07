@@ -61,7 +61,7 @@ def test_put_fs_at_curr_path():
     assert input == expected
 
 
-def test_process_file_system():
+def test_process_ls():
     input = [
         '34044 cqldc.nmr',
         'dir drg',
@@ -74,7 +74,7 @@ def test_process_file_system():
         'gcfth': {},
         'phcfhh': 266939
     }
-    assert sut.process_file_system(input) == expected
+    assert sut.process_ls(input) == expected
 
 
 def test_parse_small():
