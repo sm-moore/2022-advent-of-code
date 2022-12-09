@@ -40,18 +40,16 @@ def move_tail(head, tail):
     left = tx > hx
     right = hx > tx
     down = hy < ty
+
     if hx == tx:
         # Move up or down
         if up:
-            # h: (0, 2) t: (0, 0) -> (0, 1)
             return (tx, ty+1)
         elif down:
-            # h: (0, 2) t: (0, 4) -> (0, 3)
             return (tx, ty-1)
     elif hy == ty:
         # Move left or right
         if right:
-            # h: (2, 0) t: (0, 0) -> (1, 0)
             return (tx+1, ty)
         elif left:
             return (tx-1, ty)
@@ -70,16 +68,12 @@ def move_tail(head, tail):
 def move_head(direction, head_coords):
     match direction:
         case 'R':
-            # (0, 0) -> (1, 0)
             new_head_coords = (head_coords[0] + 1, head_coords[1])
         case 'L':
-            # (0, 0) -> (-1, 0)
             new_head_coords = (head_coords[0] - 1, head_coords[1])
         case 'U':
-            # (0, 0) -> (0, 1)
             new_head_coords = (head_coords[0], head_coords[1] + 1)
         case 'D':
-            # (0, 0) -> (0, -1)
             new_head_coords = (head_coords[0], head_coords[1] - 1)
         case _:
             print('Oops!')
@@ -88,10 +82,7 @@ def move_head(direction, head_coords):
 
 def move_ropes_one(direction, rope_coords):
     new_coords = rope_coords.copy()
-
-    h = move_head(direction, rope_coords[0])
-
-    new_coords[0] = h
+    new_coords[0] = move_head(direction, rope_coords[0])
 
     # Now respond for each rope after
     for i in range(len(rope_coords) - 1):
