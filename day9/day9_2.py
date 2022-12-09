@@ -5,9 +5,9 @@ def txt_to_lines():
     return lines
 
 
-def parse(lines):
+def parse(lines, n_ropes):
     tails = set([(0, 0)])
-    rope_coords = [(0, 0) for _ in range(10)]
+    rope_coords = [(0, 0) for _ in range(n_ropes)]
     for line in lines:
         direction, n = line.split(' ')
         for _ in range(int(n)):
@@ -35,7 +35,7 @@ def move_tail(head, tail):
     # one step diagonally to keep up:
     hx, hy = head
     tx, ty = tail
-    
+
     up = hy > ty
     left = tx > hx
     right = hx > tx
@@ -107,6 +107,11 @@ def move_ropes_one(direction, rope_coords):
 
 
 lines = txt_to_lines()
-res = parse(lines)
-# 2593 is the correct answer
-print(len(res) == 2593)
+
+res_1 = parse(lines, 2)
+# 6391 is the correct answer to part 1
+print(len(res_1) == 6391)
+
+res_2 = parse(lines, 10)
+# 2593 is the correct answer to part 2
+print(len(res_2) == 2593)
