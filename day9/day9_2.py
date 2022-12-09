@@ -21,9 +21,9 @@ def touching(tail_coords, new_head_coords):
     hx, hy = new_head_coords
     tx, ty = tail_coords
 
-    if hx - tx > 1 or tx - hx > 1:
+    if abs(hx - tx) > 1:
         return False
-    if hy - ty > 1 or ty - hy > 1:
+    if abs(hy - ty) > 1:
         return False
     return True
 
