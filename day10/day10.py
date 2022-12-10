@@ -7,7 +7,7 @@ def txt_to_lines():
 # addx V takes two cycles to complete. After two cycles, the X register is
 # increased by the value V. (V can be negative.)
 # noop takes one cycle to complete. It has no other effect.
-def parse(lines):
+def parse_part_1(lines):
     cycle_number = 1
     x_register = 1
 
@@ -33,22 +33,21 @@ def parse2(lines):
     cycle_number = 1
     x_register = 1
 
-    # the cycle number multiplied by the value of the X register
-    signal_strengths = {}
+    x_registers = {}
 
     for line in lines:
         if line == 'noop':
-            signal_strengths[cycle_number] = x_register
+            x_registers[cycle_number] = x_register
             cycle_number += 1
         else:
             n = int(line.split(' ')[1])
             # two cycles
-            signal_strengths[cycle_number] = x_register
+            x_registers[cycle_number] = x_register
             cycle_number += 1
-            signal_strengths[cycle_number] = x_register
+            x_registers[cycle_number] = x_register
             cycle_number += 1
             x_register += n
-    return signal_strengths
+    return x_registers
 
 
 def intersects(cycle, registers):
@@ -59,8 +58,7 @@ def intersects(cycle, registers):
 
     return False
 
-
-def sn(registers):
+def sn_2(registers):
     drawing = [[], [], [], [], [], []]
     lenn = 40
     outer_idx = 0
@@ -79,7 +77,7 @@ def sn(registers):
     return final
 
 
-signal_strengths = parse(txt_to_lines())
+signal_strengths = parse_part_1(txt_to_lines())
 # 20th, 60th, 100th, 140th, 180th, and 220th
 s = [signal_strengths[20],
      signal_strengths[60],
@@ -92,6 +90,5 @@ print(sum(s))
 
 regs = parse2(txt_to_lines())
 # print(regs)
-print(sn(regs))
+print(sn_2(regs))
 # RZHFGJCB
-
