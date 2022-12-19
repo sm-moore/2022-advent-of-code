@@ -18,7 +18,13 @@ class Monkey:
 
 
 def _test(divisible_by, true_, false_):
-    return lambda wl: true_ if wl % divisible_by == 0 else false_
+    def __test(wl):
+        if wl % divisible_by == 0:
+            if wl > divisible_by:
+                return divisible_by, true_
+            return wl, true_
+        return wl, false_
+    return __test
 
 
 MONKEYS = {
@@ -42,7 +48,7 @@ def play_round(monkeys, inspections, modifier):
             inspections[mid] += 1
             worry_level = monkey.operation(item)
             worry_level = worry_level // modifier
-            next_monkey = monkey.test(worry_level)
+            worry_level, next_monkey = monkey.test(worry_level)
             monkeys[next_monkey].items.append(worry_level)
     return inspections
 
@@ -64,6 +70,12 @@ assert result < 95770
 assert result == 88208
 print(result)
 
+
+# 10000
+# inspections2 = sn(copy.deepcopy(MONKEYS), rounds=100, modifier=1)
+# insp2 = sorted(inspections2.values())
+# result2 = insp2[-1] * insp2[-2]
+# print(result2)
 
 # def parse_monkeys(lines):
     # monkeys = []
